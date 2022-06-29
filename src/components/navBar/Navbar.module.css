@@ -1,0 +1,36 @@
+.navbar {
+    min-height: 100%;
+    width: 100vw;
+    height: 40px;
+    display: flex;
+    font-size: calc(10px + 2vmin);
+    background-color: lightgrey;
+}
+
+.item a {
+    color: grey;
+    font-size: 16px;
+    text-decoration: none;
+    margin: 10px;
+}
+
+.item a:hover {
+    color: blue;
+
+}
+
+.loginBlock {
+    width: 10%;
+    display: flex;
+    justify-content: right;
+    font-size: calc(10px + 2vmin);
+    margin-right: 20px;
+
+}
+
+.menu {
+    width: 90%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: left;
+}

@@ -1,9 +1,11 @@
-import React from "react";
+import React from 'react';
 
-export const ForgotPasswordPage = () => {
-  return(
-	  <div>
-		  ForgotPasswordPage
-	  </div>
-  )
-}
+const Error404Page = () => {
+    return (
+        <div>
+            ErrorPage
+        </div>
+    );
+};
+
+export default Error404Page;

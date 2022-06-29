@@ -1,0 +1,11 @@
+.checkbox {
+    transform: scale(1.7);
+    opacity: 0.9;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.spanClassName {
+
+}
