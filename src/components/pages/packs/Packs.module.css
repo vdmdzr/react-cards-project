@@ -1,0 +1,108 @@
+
+.container {
+    display: flex;
+    margin: 50px auto 50px auto;
+    background-color: #c5e5f3;
+    width: 90vw;
+}
+
+.sidebar {
+    width: 20vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #a9cbef;
+}
+
+.actionIcon {
+    width: 15px;
+    height: 15px;
+}
+
+.title {
+    font-weight: bold;
+}
+
+.buttonBlock {
+    margin: 20px;
+}
+
+.buttonBlock .button {
+    margin: 20px;
+}
+
+.buttonBlock Button {
+    width: 100px;
+}
+
+.rangeSlider {
+    margin-top: 50px;
+    width: 90%;
+}
+
+.cardsTable {
+    width: 60vw;
+}
+
+.paginatorBlock {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px
+}
+
+.selector {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mainTable {
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.mainCardsTable {
+    max-width: 70vw;
+}
+
+.headerText {
+    font-weight: bolder;
+    width: 15vh;
+}
+
+.headerSortText {
+    font-weight: bolder;
+    display: flex;
+    width: 10vh;
+    cursor: pointer;
+   margin-left: auto;
+    margin-right: auto
+}
+
+.tableText {
+    width: 10vh;
+}
+
+.iconBlock {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.iconBlock1 {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    cursor: pointer;
+}
+
+.paginator {
+    margin-right: 10vw
+}

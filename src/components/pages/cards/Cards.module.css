@@ -1,0 +1,47 @@
+.container {
+    max-width: 80%;
+    max-height: 70%;
+    background-color: #fff;
+    margin: 20px auto;
+    border-radius: 5px;
+}
+
+.updated {
+    font-weight: bold;
+    position: relative;
+    left: 30px;
+}
+
+.back {
+    padding: 20px;
+}
+
+.tableContainer {
+    max-width: 90%;
+    max-height: 70%;
+    margin: 0 auto;
+    padding-top: 20px;
+    min-width: 650px;
+
+}
+
+.unfoldMoreIcon {
+    width: 5px;
+    height: 5px;
+}
+
+.searchField {
+    max-width: 90%;
+}
+
+.arrowBackIcon {
+
+    padding-right: 10px;
+}
+
+.back {
+    display: flex;
+    padding-left: 60px;
+    align-items: center;
+}
+

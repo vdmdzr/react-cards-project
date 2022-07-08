@@ -1,0 +1,46 @@
+.background {
+    width: 100vw;
+    height: 100vh;
+    /*background-color: #aaa0ce;*/
+
+}
+
+.paper {
+    margin: 40px;
+    padding: 25px;
+    width: 300px;
+}
+
+.title{
+    opacity: 0.9;
+    font-size: 35px;
+
+}
+
+.img{
+    padding-top: 25px;
+    width: 100px;
+}
+
+.titleSend{
+    padding-top: 30px;
+    font-size: 16px;
+opacity:0.9;
+
+}
+
+.email{
+    padding-bottom: 30px;
+    padding-top: 10px;
+    font-size: 16px;
+    opacity:0.9;
+    font-weight: bold;
+}
+
+.text {
+    padding-top: 30px;
+    font-size: 16px;
+    opacity:0.9;
+    font-weight: bold;
+
+}
