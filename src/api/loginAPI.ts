@@ -25,7 +25,7 @@ export type ProfileResponseType = {
 }
 
 export type changeNameType = {
-    newName: string,
+    name: string,
     avatar: string | undefined
 }
 

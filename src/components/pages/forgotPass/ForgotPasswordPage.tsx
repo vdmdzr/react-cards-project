@@ -1,23 +1,23 @@
 import React from 'react'
-import {useFormik} from "formik";
-import {Link, useNavigate} from "react-router-dom";
-import {validateNewPassEmailFormErrors} from "../../../utils/error-utils";
-import {useAppDispatch} from "../../../store/store";
-import {recoveryPassTC} from "../../../reducers/forgotReducer";
-import {EMAIL_TEMPLATE} from "../../../const/CONST";
 import Grid from '@mui/material/Grid';
 import FormControl from '@mui/material/FormControl';
 import FormGroup from '@mui/material/FormGroup';
 import Button from '@mui/material/Button';
+import {useFormik} from "formik";
 import style from './ForgotPasswordPage.module.css'
 import TextField from "@mui/material/TextField";
 import Paper from '@mui/material/Paper';
 import Box from "@mui/material/Box";
+import {Link, useNavigate} from "react-router-dom";
+import {validateNewPassEmailFormErrors} from "../../../utils/error-utils";
+import {useAppDispatch, useAppSelector} from "../../../store/store";
+import {recoveryPassTC} from "../../../reducers/forgotReducer";
+import {EMAIL_TEMPLATE} from "../../../const/CONST";
 
 const ForgotPasswordPage = () => {
-
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
+
 
 	const formik = useFormik({
 		initialValues: {

@@ -1,0 +1,49 @@
+.selector {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid black;
+    margin: 5px 5px 5px 0;
+}
+
+.activeSelector {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid #4444a9;
+    background-color: #4444a9;
+    margin: 5px 5px 5px 0;
+}
+
+.error {
+    color: red;
+}
+
+.buttonBlock {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.rating {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.learnTitle {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: 20px
+}
+
+.text {
+    margin-bottom: 20px;
+}
+
+
+

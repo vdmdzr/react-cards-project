@@ -93,7 +93,7 @@ export const updateUserNameTC = (data: changeNameType): AppThunk => (dispatch) =
     dispatch(setAppStatusAC('loading'))
     AuthAPI.updateProfile(data).then(() => {
         dispatch(setAppStatusAC('succeeded'))
-        dispatch(updateUserNameAC(data.newName))
+        dispatch(updateUserNameAC(data.name))
     })
         .catch((error) => {
             console.log(error.message)

@@ -9,6 +9,7 @@ import NewPasswordPage from "./newPass/NewPasswordPage";
 import Tests from "./Tests";
 import {Cards} from "./cards/Cards";
 import {Packs} from "./packs/Packs";
+import {LearnPage} from "./learn/LearnPage";
 
 
 export const PATH = {
@@ -22,11 +23,10 @@ export const PATH = {
 	TEST_PAGE: '/test-page',
 	CARDS_PAGE: '/cards-page/:packid/:packname',
 	PACKS_PAGE: '/packs-page',
+	LEARN_PAGE: '/learn-page/:packid/:packname',
 }
 
-
 const Pages = () => {
-
 	return (
 		<div>
 			<Routes>
@@ -40,6 +40,7 @@ const Pages = () => {
 				<Route path={PATH.TEST_PAGE} element={<Tests/>}/>
 				<Route path={PATH.CARDS_PAGE} element={<Cards/>}/>
 				<Route path={PATH.PACKS_PAGE} element={<Packs/>}/>
+				<Route path={PATH.LEARN_PAGE} element={<LearnPage/>}/>
 				<Route path={'/set-new-password/'}>
 					<Route index element={<div><NewPasswordPage/></div>}/>
 					<Route path={':token'} element={<div><NewPasswordPage/></div>}/>
@@ -52,5 +53,9 @@ const Pages = () => {
 		</div>
 	);
 };
+
+
+
+
 
 export default Pages;

@@ -39,18 +39,20 @@ export type UpdatePackRequestData = {
     name?: string
 }
 
-export type fetchDataType = {
+export type FetchDataType = {
     page?: number
     pageCount?: number
     user_id?: string
     packName?: string
+    cardPacksTotalCount?: number
     sortPacks?: string | number
     min?: number
     max?: number
+    name?: string
 }
 
 export const packsAPI = {
-    getPacks: (data?: fetchDataType) => {
+    getPacks: (data?: FetchDataType) => {
         return instance.get<GetPacksResponseType>('cards/pack', {
             params:
                 {
@@ -63,9 +65,8 @@ export const packsAPI = {
             })
     },
 
-    createPack(data?: CreatePackRequestData) {
+    createPack(data: CreatePackRequestData) {
         return instance.post('cards/pack', {cardsPack: {
-                name: "My new pack",
                 ...data
             }})
             .then((res) => {
@@ -82,4 +83,3 @@ export const packsAPI = {
             }})
     }
 };
-

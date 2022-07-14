@@ -5,6 +5,8 @@ import Stack from '@mui/material/Stack';
 
 type PaginatorPropsType = {
     onPageChange: (page: number) => void
+    totalCount: number
+    pageCount: number
 }
 
 export const Paginator = (props: PaginatorPropsType) => {
@@ -16,7 +18,7 @@ export const Paginator = (props: PaginatorPropsType) => {
     return (
         <Stack spacing={10}>
             <Pagination
-                count={10}
+                count={Math.ceil(props.totalCount / props.pageCount)}
                 defaultPage={1}
                 color="primary"
                 onChange={handleChange}/>

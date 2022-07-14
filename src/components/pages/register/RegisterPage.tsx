@@ -1,18 +1,18 @@
 import React from 'react'
+import {Button, FormControl, FormGroup, Grid, TextField} from "@material-ui/core";
 import {useFormik} from 'formik';
 import {Link, Navigate} from "react-router-dom";
 import style from '../../common/styles/FormStyles.module.css'
 import {registerTC} from "../../../reducers/registerReducer";
 import {PATH} from "../Pages";
 import {useAppDispatch, useAppSelector} from "../../../store/store";
+import LinearProgress from "@mui/material/LinearProgress";
 import ErrorSnackbar from "../../common/pages/ErrorSnackBar";
 import {validateFormErrors} from "../../../utils/error-utils";
 import InputLabel from "@mui/material/InputLabel";
 import Input from "@mui/material/Input";
-import LinearProgress from "@mui/material/LinearProgress";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
-import {Button, FormControl, FormGroup, Grid, TextField} from "@material-ui/core";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 
@@ -20,7 +20,6 @@ type StatePassword = {
     password: string;
     showPassword: boolean;
 }
-
 
 const RegisterPage = () => {
 
@@ -41,11 +40,11 @@ const RegisterPage = () => {
             formik.resetForm()
         },
     })
-
     const [valuesPassword, setValuesPassword] = React.useState<StatePassword>({
         password: '',
         showPassword: true,
     });
+
 
     const handleClickShowPassword = () => {
         setValuesPassword({
@@ -53,6 +52,7 @@ const RegisterPage = () => {
             showPassword: !valuesPassword.showPassword,
         });
     };
+
 
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();

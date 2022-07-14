@@ -44,4 +44,15 @@
     padding-left: 60px;
     align-items: center;
 }
+.iconBlock{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+
+.packName{
+    font-weight: 500;
+    font-size: 25px;
+}
 

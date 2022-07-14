@@ -1,0 +1,31 @@
+.modalHead {
+    display: flex;
+    justify-content: space-between;
+}
+
+.operationName {
+    font-weight: bold;
+}
+
+.closeCross {
+    cursor: pointer;
+}
+
+.buttonBlock {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.children {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.input {
+    width: 90%;
+}
+
+.checkbox {
+    margin-top: 10px;
+}

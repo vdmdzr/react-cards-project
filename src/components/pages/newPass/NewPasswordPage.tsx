@@ -1,21 +1,20 @@
 import React from 'react';
 import "./NewPasswordPage.css";
-import {useFormik} from "formik";
-import {validateNewPassFormErrors} from "../../../utils/error-utils";
-import {useAppDispatch} from "../../../store/store";
-import {newPassTC} from "../../../reducers/newPasswordReducer";
-import {Link, useNavigate, useParams} from "react-router-dom";
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import Visibility from "@mui/icons-material/Visibility";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Paper from "@mui/material/Paper";
 import FormControl from "@mui/material/FormControl";
 import Button from "@mui/material/Button";
-
+import {useFormik} from "formik";
+import {Link, useNavigate, useParams} from "react-router-dom";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
+import {validateNewPassFormErrors} from "../../../utils/error-utils";
+import {useAppDispatch} from "../../../store/store";
+import {newPassTC} from "../../../reducers/newPasswordReducer";
 
 type StatePassword = {
 	password: string;
@@ -26,12 +25,9 @@ type StateConfirmPassword = {
 	showConfirmPassword: boolean;
 }
 
-
 const NewPasswordPage = () => {
-
 	const navigate = useNavigate()
 	const dispatch = useAppDispatch()
-
 	const {token} = useParams()
 
 	const formik = useFormik({
@@ -54,30 +50,25 @@ const NewPasswordPage = () => {
 		password: '',
 		showPassword: true,
 	});
-
 	const [valuesConfirmPassword, setValuesConfirmPassword] = React.useState<StateConfirmPassword>({
 		confirmPassword: '',
 		showConfirmPassword: true,
 	});
-
 	const handleClickShowPassword = () => {
 		setValuesPassword({
 			...valuesPassword,
 			showPassword: !valuesPassword.showPassword,
 		});
 	};
-
 	const handleClickShowConfirmPassword = () => {
 		setValuesConfirmPassword({
 			...valuesConfirmPassword,
 			showConfirmPassword: !valuesConfirmPassword.showConfirmPassword,
 		});
 	};
-
 	const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
 	}
-
 
 	return (
 		<>

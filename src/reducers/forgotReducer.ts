@@ -28,11 +28,9 @@ export const recoveryPassTC = (data: EmailRequestType): AppThunk => (dispatch) =
 	dispatch(setAppStatusAC('loading'))
 	passAPI.sendEmail(data)
 		.then(res => {
-			debugger
 			dispatch(recoveryPassAC(res.data.info))
 		})
 		.catch(err => {
-			debugger
 			dispatch(setAppErrorAC(err.response.data.error))
 		})
 		.finally(() => {

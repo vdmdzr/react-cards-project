@@ -1,6 +1,17 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 import style from './Cards.module.css';
+import Rating from '@mui/material/Rating';
+import IconButton from "@material-ui/core/IconButton";
+import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {useNavigate, useParams} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../store/store";
 import {addCardTC, deleteCardTC, getCardsTC, updateCardTC} from "../../../reducers/cardsReduser";
@@ -9,23 +20,12 @@ import styles from "../packs/Packs.module.css";
 import {Paginator} from "../../common/pages/pagination/Paginator";
 import {Selector} from "../../common/pages/select/Selector";
 import {SearchAppBar} from "../searchBar/SearchBar";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Rating from '@mui/material/Rating';
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from '@mui/icons-material/Delete';
-import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import EditIcon from '@mui/icons-material/Edit';
+import AddNewCardModal from './modals/AddNewCardModal';
+import {DeleteCardModal} from './modals/DeleteCardModal';
+import {UpdateCardModal} from './modals/UpdateCardModal'
 
 
 export const Cards = React.memo(() => {
-
 	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
 
@@ -34,6 +34,9 @@ export const Cards = React.memo(() => {
 	const page = useAppSelector(state => state.cards.page)
 	const pageCount = useAppSelector(state => state.cards.pageCount)
 	const cards = useAppSelector(state => state.cards.cards)
+	const user_id = useAppSelector(state => state.profile.userId)
+	const cardsTotalCount = useAppSelector(state => state.cards.cardsTotalCount)
+	const searchQuestion = useAppSelector(state => state.cards.searchQuestion)
 
 	useEffect(() => {
 		if (packid) {
@@ -45,75 +48,95 @@ export const Cards = React.memo(() => {
 		navigate('/packs-page')
 	}
 
-	const valueRating = 4
-
-	const handlerAddBtn = () => {
-		if (packid) {
-			dispatch(addCardTC({cardsPack_id: packid}))
-		}
-	}
-
-	const handlerDeleteCard = (cardId: string) => {
-		if (packid) {
-			dispatch(deleteCardTC(packid, cardId))
-		}
-	}
-
-	const handlerUpdateCard = (cardId: string) => {
-		if (packid) {
-			dispatch(updateCardTC({_id: cardId, question: 'update name card'}, packid))
-		}
-	}
-
 	const [sortUpdate, setSortUpdate] = useState(false)//для сортировки по update
+	const [sortGrade, setSortGrade] = useState(false)//для сортировки по grade
+
+	//переключатель сортировки с update на grade
+	const [switchSort, setSwitchSort] = useState<'updated' | 'grade'>('updated')
 
 	const handleSortByUpdate = () => {
 		let sortUpdateStr
+		setSwitchSort('updated')
 		sortUpdate ? sortUpdateStr = '0updated' : sortUpdateStr = '1updated'
 		if (packid) {
 			dispatch(getCardsTC({
 				cardsPack_id: packid,
 				sortCards: sortUpdateStr,
 				page,
-				pageCount
+				pageCount,
+				cardQuestion: searchQuestion,
 			}))
 		}
 		setSortUpdate(!sortUpdate)
 	}
 
-	const onPageChange = (page: number) => {
+	const handleSortByGrade = () => {
+		let sortGradeStr
+		setSwitchSort('grade')
+		sortGrade ? sortGradeStr = '0grade' : sortGradeStr = '1grade'
 		if (packid) {
 			dispatch(getCardsTC({
 				cardsPack_id: packid,
+				sortCards: sortGradeStr,
 				page,
 				pageCount,
-				sortCards: `${Number(sortUpdate)}updated`,
+				cardQuestion: searchQuestion,
+			}))
+		}
+		setSortGrade(!sortGrade)
+	}
+
+	const onPageChange = (page: number) => {
+		if (packid && switchSort === 'updated') {
+			dispatch(getCardsTC({
+				cardsPack_id: packid, page, pageCount, cardQuestion: searchQuestion,
+				sortCards: `${Number(sortUpdate)}${switchSort}`,
+			}))
+		}
+		if (packid && switchSort === 'grade') {
+			dispatch(getCardsTC({
+				cardsPack_id: packid, page, pageCount,cardQuestion: searchQuestion,
+				sortCards: `${Number(sortGrade)}${switchSort}`,
 			}))
 		}
 	}
 
 	const onChangePageCount = (pageCount: number) => {
-		if (packid) {
+		if (packid && switchSort === 'updated') {
 			dispatch(getCardsTC({
-				cardsPack_id: packid,
-				page,
-				pageCount,
-				sortCards: `${Number(sortUpdate)}updated`,
+				cardsPack_id: packid, page, pageCount,cardQuestion: searchQuestion,
+				sortCards: `${Number(sortUpdate)}${switchSort}`,
+			}))
+		}
+		if (packid && switchSort === 'grade') {
+			dispatch(getCardsTC({
+				cardsPack_id: packid, page, pageCount,cardQuestion: searchQuestion,
+				sortCards: `${Number(sortGrade)}${switchSort}`,
 			}))
 		}
 	}
 
-	const onSearchPacks = (cardQuestion: string) => {
-		if (packid) {
+	const onSearchQuestionCards = (cardQuestion: string) => {
+		if (packid && switchSort === 'updated') {
 			dispatch(getCardsTC({
-				cardsPack_id: packid,
-				cardQuestion,
-				page,
-				pageCount,
-				sortCards: `${Number(sortUpdate)}updated`,
+				cardsPack_id: packid, cardQuestion, page, pageCount,
+				sortCards: `${Number(sortUpdate)}${switchSort}`,
+			}))
+		}
+		if (packid && switchSort === 'grade') {
+			dispatch(getCardsTC({
+				cardsPack_id: packid, cardQuestion, page, pageCount,
+				sortCards: `${Number(sortGrade)}${switchSort}`,
 			}))
 		}
 	}
+
+	const deleteCardHandler = (cardId: string) => {
+		if (packid) {
+			dispatch(deleteCardTC(packid, cardId))
+		}
+	}
+
 
 	return (
 		<>
@@ -122,21 +145,23 @@ export const Cards = React.memo(() => {
 
 				<div className={style.back}>
 					<ArrowBackIcon onClick={navigateBackHandler} className={style.arrowBackIcon}/>
-					<p>{packname}</p>
+					<p className={style.packName}>{packname}</p>
 				</div>
 
 				<TableContainer className={style.tableContainer} elevation={3} component={Paper}>
 
-					<SearchAppBar onSearchPacks={onSearchPacks} nameBtn={'Add Card'} callbackBtn={handlerAddBtn}/>
+					<SearchAppBar onSearchPacks={onSearchQuestionCards}
+								  children={<AddNewCardModal/>}
+					/>
 
 					<Table aria-label="simple table">
 
 						<TableHead>
 							<TableRow>
-								<TableCell sx={{'font-weight': 'bold'}}>Question</TableCell>
-								<TableCell sx={{'font-weight': 'bold'}} align="right">Answer</TableCell>
+								<TableCell sx={{'fontWeight': 'bold'}}>Question</TableCell>
+								<TableCell sx={{'fontWeight': 'bold'}} align="right">Answer</TableCell>
 
-								<TableCell className={style.updated} sx={{'font-weight': 'bold'}} align={'right'}>
+								<TableCell className={style.updated} sx={{'fontWeight': 'bold'}} align={'right'}>
 									<div className={styles.headerSortText}><b>Updated</b>
 										<div>
 											<IconButton onClick={handleSortByUpdate} aria-label="arrow" size="small">
@@ -146,15 +171,24 @@ export const Cards = React.memo(() => {
 									</div>
 								</TableCell>
 
-								<TableCell sx={{'font-weight': 'bold'}} align="right">Grade</TableCell>
-								<TableCell sx={{'font-weight': 'bold'}} align="right">Actions</TableCell>
+								<TableCell className={style.updated} sx={{'fontWeight': 'bold'}} align={'right'}>
+									<div className={styles.headerSortText}><b>Grade</b>
+										<div>
+											<IconButton onClick={handleSortByGrade} aria-label="arrow" size="small">
+												<UnfoldMoreIcon fontSize="inherit"/>
+											</IconButton>
+										</div>
+									</div>
+								</TableCell>
+
+								<TableCell sx={{'fontWeight': 'bold'}} align="right">Actions</TableCell>
 							</TableRow>
 						</TableHead>
 						<TableBody>
 
 							{cards.map((card) => (
 								<TableRow
-									key={card.cardsPack_id}
+									key={card._id}
 									sx={{'&:last-child td, &:last-child th': {border: 0}}}
 								>
 									<TableCell component="th" scope="row">{card.question}</TableCell>
@@ -162,22 +196,28 @@ export const Cards = React.memo(() => {
 									<TableCell align="right">{
 										`${(card.updated).slice(8, 10)}.${(card.updated).slice(5, 7)}.${(card.updated).slice(0, 4)}`
 									}</TableCell>
+
 									<TableCell align="right">
-										<Rating name="read-only" value={valueRating} size={"small"} readOnly/>
+										<Rating name="read-only"
+												precision={0.5}
+												value={card.grade}
+												size={"small"} readOnly/>
 									</TableCell>
 
 									<TableCell align="right">
+										{(card.user_id === user_id)
+											? <div className={style.iconBlock}>
 
-										<IconButton onClick={() => handlerDeleteCard(card._id)}
-										            aria-label="delete" size="small">
-											<DeleteIcon fontSize="inherit"/>
-										</IconButton>
+												<DeleteCardModal handleOperation={() => deleteCardHandler(card._id)}
+																 cardName={card.question}/>
 
-										<IconButton onClick={() => handlerUpdateCard(card._id)}
-										            aria-label="edit" size="small">
-											<EditIcon fontSize="inherit"/>
-										</IconButton>
-
+												<UpdateCardModal packid={packid!}
+																 question={card.question}
+																 answer={card.answer}
+																 cardId={card._id}/>
+											</div>
+											: null
+										}
 									</TableCell>
 
 								</TableRow>
@@ -189,7 +229,7 @@ export const Cards = React.memo(() => {
 
 				<div className={styles.paginatorBlock}>
 					<div className={styles.paginator}>
-						<Paginator onPageChange={onPageChange}/>
+						<Paginator onPageChange={onPageChange} totalCount={cardsTotalCount} pageCount={pageCount}/>
 					</div>
 					<div className={styles.selector}>
 						Show

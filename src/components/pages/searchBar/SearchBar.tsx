@@ -1,25 +1,24 @@
 import * as React from 'react';
 import {ChangeEvent, useEffect, useState} from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
 import {useDebounce} from "usehooks-ts";
 import {Search} from "../../common/pages/searchBar/searchBarComponents/SearchField";
 import {StyledInputBase} from "../../common/pages/searchBar/searchBarComponents/StyledInputBase";
 import {SearchIcon} from '../../common/pages/searchBar/searchBarComponents/SearchIcon';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import {Button} from '@mui/material';
-
+import {setSearchQuestionAC} from '../../../reducers/cardsReduser';
+import { useAppDispatch } from '../../../store/store';
 
 type SearchType = {
 	onSearchPacks: (packName: string) => void
-	nameBtn: string
-	callbackBtn: () => void
+	children: React.ReactNode
 }
 
-
 export const SearchAppBar = (props: SearchType) => {
-
+	const dispatch = useAppDispatch()
 	const [value, setValue] = useState<string>('')
+	const [firstRender, setFirstRender] = useState(true)
 	const debouncedValue = useDebounce<string>(value, 1000)
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -27,9 +26,15 @@ export const SearchAppBar = (props: SearchType) => {
 	}
 
 	useEffect(() => {
-		props.onSearchPacks(debouncedValue)
-	}, [debouncedValue])
+		setFirstRender(false)
+	}, [])
 
+	useEffect(() => {
+		if (!firstRender) {
+			props.onSearchPacks(value)
+			dispatch(setSearchQuestionAC(value))
+		}
+	}, [debouncedValue])
 
 	return (
 		<Box sx={{flexGrow: 1}}>
@@ -49,10 +54,7 @@ export const SearchAppBar = (props: SearchType) => {
 						</Search>
 					</div>
 					<div>
-						<Button variant="contained" color="primary"
-						        onClick={props.callbackBtn}>
-							{props.nameBtn}
-						</Button>
+						{props.children}
 					</div>
 				</Toolbar>
 			</AppBar>

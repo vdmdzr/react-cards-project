@@ -37,7 +37,7 @@ export type CardResponseType = {
 export type PostRequestType = {
 	cardsPack_id: string
 	question?: string // если не отправить будет таким
-	answer?: "no answer" // если не отправить будет таким
+	answer?: string // если не отправить будет таким
 	grade?: number // 0..5, не обязателен
 	shots?: number // не обязателен
 	answerImg?: string // не обязателен
@@ -50,6 +50,8 @@ export type UpdateCardType = {
 	_id: string
 	question?: string // не обязательно
 	comments?: string// не обязательно
+	answer?: string // если не отправить будет таким
+
 }
 
 export const cardsAPI = {
@@ -59,7 +61,7 @@ export const cardsAPI = {
 	},
 	createCard(data: PostRequestType) {
 		return instance.post('/cards/card', {
-			card: {...data, question: 'new question', answer: 'new answer'}
+			card: {...data, question: data.question, answer:data.answer}
 		})
 	},
 	deleteCard: (cardId: string) => {
@@ -67,5 +69,8 @@ export const cardsAPI = {
 	},
 	updateCard: (data: UpdateCardType) => {
 		return instance.put('/cards/card', {card: data})
-	}
+	},
+	setCardGrade(grade: number, card_id: string) {
+		return instance.put('/cards/grade', {grade, card_id})
+	},
 }

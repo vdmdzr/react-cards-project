@@ -89,6 +89,11 @@
     width: 10vh;
 }
 
+.tableTextLink {
+    width: 10vh;
+    cursor: pointer;
+}
+
 .iconBlock {
     width: 100%;
     display: flex;

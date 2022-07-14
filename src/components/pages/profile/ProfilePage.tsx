@@ -13,7 +13,6 @@ const ProfilePage = () => {
     const avatar=useAppSelector(state=>state.profile.profile.avatar)
     const dispatch = useAppDispatch()
 
-
     return (
         <div>
             <Navbar/>
@@ -34,7 +33,7 @@ const ProfilePage = () => {
                                     <EditableSpan
                                         title={profile.name}
                                         onChange={(newValue) => {
-                                            const newData: changeNameType = {avatar: profile.avatar, newName: newValue}
+                                            const newData: changeNameType = {avatar: profile.avatar, name: newValue}
                                             dispatch(updateUserNameTC(newData))
                                         }}/>
                                 </div>
