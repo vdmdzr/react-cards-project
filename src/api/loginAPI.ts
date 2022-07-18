@@ -25,8 +25,8 @@ export type ProfileResponseType = {
 }
 
 export type changeNameType = {
-    name: string,
-    avatar: string | undefined
+    name?: string,
+    avatar?: string
 }
 
 export const AuthAPI = {

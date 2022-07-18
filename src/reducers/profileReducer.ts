@@ -27,7 +27,8 @@ export const profileReducer = (state: InitialStateType = initialState, action:
             return {...state, profile: {...state.profile, name: action.newName}}
         case 'profile/SAVE-USER-ID':
             return {...state, userId: action.userId}
-
+        case 'APP-UPDATE-USER-AVATAR':
+            return {...state, profile: {...state.profile, avatar: action.avatar}}
         default:
             return state
     }
@@ -75,6 +76,14 @@ export const saveUserIdAC = (userId: string) => {
     } as const
 }
 
+export const updateUserAvatarAC = (avatar: string) => {
+    return {
+        type: 'APP-UPDATE-USER-AVATAR',
+        avatar
+    } as const
+}
+
+
 export const initializeAppTC = (): AppThunk => (dispatch) => {
     dispatch(setAppStatusAC('loading'))
     AuthAPI.me().then((res) => {
@@ -93,7 +102,12 @@ export const updateUserNameTC = (data: changeNameType): AppThunk => (dispatch) =
     dispatch(setAppStatusAC('loading'))
     AuthAPI.updateProfile(data).then(() => {
         dispatch(setAppStatusAC('succeeded'))
-        dispatch(updateUserNameAC(data.name))
+        if (data.name){
+            dispatch(updateUserNameAC(data.name))
+        }
+        if (data.avatar) {
+            dispatch(updateUserAvatarAC(data.avatar))
+        }
     })
         .catch((error) => {
             console.log(error.message)
@@ -108,6 +122,7 @@ export type SetAppActionType = ReturnType<typeof setAppStatusAC>
 export type SetAppErrorActionType = ReturnType<typeof setAppErrorAC>
 export type setAppIsInitializedType = ReturnType<typeof setAppIsInitializedAC>
 export type updateUserNameType = ReturnType<typeof updateUserNameAC>
+export type updateUserAvatarType = ReturnType<typeof updateUserAvatarAC>
 export type setProfileType = ReturnType<typeof setProfileAC>
 export type saveUserIdACType = ReturnType<typeof saveUserIdAC>
 
@@ -118,3 +133,4 @@ export type AuthActionsType = SetAppActionType
     | setProfileType
     | updateUserNameType
     | saveUserIdACType
+    | updateUserAvatarType

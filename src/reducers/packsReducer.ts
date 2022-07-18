@@ -38,6 +38,7 @@ const initialState = {
     max: 110,
     userId: '',
     packName: '',
+    searchPackName:'',
 }
 
 export const packsReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
@@ -58,6 +59,8 @@ export const packsReducer = (state: InitialStateType = initialState, action: Act
             return {...state, cardPacksTotalCount: action.cardPacksTotalCount}
         case 'packs/SAVE-MAX-CARDS-COUNT':
             return {...state, maxCardsCount: action.maxCardsCount}
+        case 'packs/SAVE-SEARCH-PACK-NAME':
+            return {...state, searchPackName: action.searchPackName}
         default:
             return state
     }
@@ -126,6 +129,7 @@ export const saveMinAC = (min: number) => ({type: 'packs/SAVE-MIN-SLIDER-VALUE',
 export const saveMaxAC = (max: number) => ({type: 'packs/SAVE-MAX-SLIDER-VALUE', max} as const)
 export const saveMaxCardsCountAC = (maxCardsCount: number) => ({type: 'packs/SAVE-MAX-CARDS-COUNT', maxCardsCount} as const)
 export const saveUserIdAC = (userId: string) => ({type: 'packs/SAVE-USER-ID', userId} as const)
+export const searchPackNameAC = (searchPackName: string) => ({type: 'packs/SAVE-SEARCH-PACK-NAME', searchPackName} as const)
 
 type ActionType = ReturnType<typeof setPacksAC>
     | ReturnType<typeof savePageCountAC>
@@ -135,5 +139,6 @@ type ActionType = ReturnType<typeof setPacksAC>
     | ReturnType<typeof saveUserIdAC>
     | ReturnType<typeof setCardPacksTotalCountAC>
     | ReturnType<typeof saveMaxCardsCountAC>
+    | ReturnType<typeof searchPackNameAC>
 
 

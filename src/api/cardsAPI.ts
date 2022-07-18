@@ -59,11 +59,11 @@ export const cardsAPI = {
 		return instance
 			.get<CardResponseType>('/cards/card', {params: {pageCount: 10, ...data}})
 	},
-	createCard(data: PostRequestType) {
-		return instance.post('/cards/card', {
-			card: {...data, question: data.question, answer:data.answer}
-		})
-	},
+		createCard(data: PostRequestType) {
+			return instance.post('/cards/card', {
+				card: {...data, question: data.question, answer: data.answer}
+			})
+		},
 	deleteCard: (cardId: string) => {
 		return instance.delete(`/cards/card?id=${cardId}`)
 	},

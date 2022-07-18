@@ -7,32 +7,31 @@ import {useDebounce} from "usehooks-ts";
 import {Search} from "../../common/pages/searchBar/searchBarComponents/SearchField";
 import {StyledInputBase} from "../../common/pages/searchBar/searchBarComponents/StyledInputBase";
 import {SearchIcon} from '../../common/pages/searchBar/searchBarComponents/SearchIcon';
-import {setSearchQuestionAC} from '../../../reducers/cardsReduser';
-import { useAppDispatch } from '../../../store/store';
 
 type SearchType = {
 	onSearchPacks: (packName: string) => void
+	searchCallback: (value: string)=>void
 	children: React.ReactNode
 }
 
 export const SearchAppBar = (props: SearchType) => {
-	const dispatch = useAppDispatch()
+
 	const [value, setValue] = useState<string>('')
-	const [firstRender, setFirstRender] = useState(true)
+	const [firstRender, setFirstRender]=useState(true)
 	const debouncedValue = useDebounce<string>(value, 1000)
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setValue(event.currentTarget.value)
 	}
 
-	useEffect(() => {
+	useEffect(()=>{
 		setFirstRender(false)
-	}, [])
+	},[])
 
 	useEffect(() => {
-		if (!firstRender) {
+		if(!firstRender) {
 			props.onSearchPacks(value)
-			dispatch(setSearchQuestionAC(value))
+			props.searchCallback(value)
 		}
 	}, [debouncedValue])
 

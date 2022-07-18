@@ -46,9 +46,24 @@
     font-size: calc(10px + 0.8vmin);
 }
 
+.avatar {
+    width: calc(30px + 6vmin);
+    height: calc(30px + 6vmin);
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatarBlock {
+    display: flex;
+    align-items: flex-end;
+}
+
 .photo{
-    width: calc(30px + 3vmin);
-    height: calc(30px + 3vmin);
+    width: calc(30px + 4vmin);
+    height: calc(30px + 4vmin);
     border-radius: 50%;
 }
 
@@ -56,6 +71,11 @@
     margin-bottom: 20px;
     margin-top: 10px;
     font-size: calc(10px + 0.8vmin);
+}
+
+.uploadIcon {
+    margin-top: -20px;
+    margin-left: 50px;
 }
 
 .email {

@@ -27,9 +27,7 @@ export const AddNewPackModal = () => {
         setPrivatePack(false)
     }
 
-
     return (
-
         <BasicModal operationButtonName={"ADD NEW PACK"}
                     operationName={"Add New Pack"}
                     handleOperation={createPackHandler}

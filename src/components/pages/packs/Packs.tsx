@@ -10,7 +10,7 @@ import Paper from '@mui/material/Paper';
 import styles from './Packs.module.css'
 import {Button, IconButton} from '@mui/material';
 import {useAppDispatch, useAppSelector} from "../../../store/store";
-import {deletePackTC, getPacksTC, savePageAC, saveUserIdAC} from "../../../reducers/packsReducer";
+import {deletePackTC, getPacksTC, savePageAC, saveUserIdAC, searchPackNameAC} from "../../../reducers/packsReducer";
 import {RangeSlider} from "../../common/pages/slider/RangeSlider";
 import {SearchAppBar} from "../searchBar/SearchBar";
 import {Paginator} from "../../common/pages/pagination/Paginator";
@@ -40,7 +40,7 @@ export const Packs = () => {
     const userId = useAppSelector(state => state.packs.userId)
     const min = useAppSelector(state => state.packs.min)
     const max = useAppSelector(state => state.packs.max)
-
+    const searchPackName = useAppSelector(state => state.packs.searchPackName)
 
     const sortPacks = `${Number(sortDirection)}updated`
 
@@ -80,6 +80,7 @@ export const Packs = () => {
                 user_id: userId,
                 page,
                 pageCount,
+                packName: searchPackName,
                 sortPacks,
                 min,
                 max
@@ -88,6 +89,7 @@ export const Packs = () => {
         } else {
             dispatch(getPacksTC({
                 page,
+                packName: searchPackName,
                 pageCount,
                 sortPacks,
                 min,
@@ -100,6 +102,7 @@ export const Packs = () => {
         if (userId) {
             dispatch(getPacksTC({
                 user_id: userId,
+                packName: searchPackName,
                 page,
                 pageCount,
                 sortPacks,
@@ -109,6 +112,7 @@ export const Packs = () => {
         } else {
             dispatch(getPacksTC({
                 page,
+                packName: searchPackName,
                 pageCount,
                 sortPacks,
                 min,
@@ -142,9 +146,10 @@ export const Packs = () => {
 
     const onSortPacks = () => {
         if (userId) {
-            dispatch(getPacksTC({user_id: userId, sortPacks, page, pageCount}))
+            dispatch(getPacksTC({user_id: userId, sortPacks, page, pageCount, packName: searchPackName,
+            }))
         } else {
-            dispatch(getPacksTC({sortPacks, page, pageCount}))
+            dispatch(getPacksTC({sortPacks, page, pageCount, packName: searchPackName}))
         }
         setSortDirection(!sortDirection)
     }
@@ -153,6 +158,7 @@ export const Packs = () => {
         if (userId) {
             dispatch(getPacksTC({
                 user_id: userId,
+                packName: searchPackName,
                 page,
                 pageCount,
                 sortPacks,
@@ -162,6 +168,7 @@ export const Packs = () => {
         } else {
             dispatch(getPacksTC({
                 page,
+                packName: searchPackName,
                 pageCount,
                 sortPacks,
                 min,
@@ -170,7 +177,6 @@ export const Packs = () => {
         }
 
     }
-
 
     const goToCardHandler = (packId: string, packName: string) => {
         navigate(`/cards-page/${packId}/${packName}`)
@@ -181,7 +187,7 @@ export const Packs = () => {
     }
 
     const deletePackHandler = (packId: string) => {
-        if (userId){
+        if (userId) {
             dispatch(deletePackTC(packId, {
                 user_id: userId,
                 page,
@@ -199,6 +205,10 @@ export const Packs = () => {
                 max
             }))
         }
+    }
+
+    const searchPackNameCallback = (value: string) => {
+        dispatch(searchPackNameAC(value))
     }
 
     return (
@@ -234,7 +244,9 @@ export const Packs = () => {
                     <h3>Packs List</h3>
 
                     <SearchAppBar onSearchPacks={onSearchPacks}
-                                  children={<AddNewPackModal/>}/>
+                                  children={<AddNewPackModal/>}
+                                  searchCallback={searchPackNameCallback}
+                    />
 
                     <TableContainer component={Paper} className={styles.cardsTable}>
                         <Table className={styles.mainCardsTable} aria-label="simple table">

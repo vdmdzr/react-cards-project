@@ -74,7 +74,6 @@ export const BasicModal: FC<PropsType> = ({
 
                     </div>
 
-
                 </Box>
             </Modal>
         </div>

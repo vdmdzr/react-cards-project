@@ -6,7 +6,8 @@ type ActionType = ReturnType<typeof getCardsAC> |
     ReturnType<typeof pageCardsAC> |
     ReturnType<typeof pageCountCardsAC> |
     ReturnType<typeof totalCountCardsAC>|
-	ReturnType<typeof setSearchQuestionAC>
+	ReturnType<typeof setSearchQuestionAC>|
+	ReturnType<typeof switchSortAC>
 
 type InitStateType = typeof initState
 
@@ -19,6 +20,7 @@ const initState = {
     pageCount: 10,
     packUserId: '',
 	searchQuestion: '',
+	switchSort: '',
 }
 
 type UpdatedGradeCard = {
@@ -42,12 +44,18 @@ export const cardsReducer = (state: InitStateType = initState, action: ActionTyp
             return {...state, cardsTotalCount: action.cardsTotalCount}
 	    case "CARDS/SET_SEARCH_QUESTION":
 		    return {...state, searchQuestion: action.searchQuestion}
+	    case "CARDS/SWITCH_SORT":
+			return {...state, switchSort: action.switchSort}
 	    default:
             return state
     }
 }
 
 //action creaters
+export const switchSortAC = (switchSort: string) => {
+	return {type: 'CARDS/SWITCH_SORT', switchSort} as const
+}
+
 export const getCardsAC = (cards: CardType[]) => {
     return {type: 'CARDS/GET_CARDS', cards} as const
 }
