@@ -40,6 +40,7 @@ export const Cards = React.memo(() => {
 	const searchQuestion = useAppSelector(state => state.cards.searchQuestion)
 	const switchSort = useAppSelector(state => state.cards.switchSort)
 
+
 	useEffect(() => {
 		if (packid) {
 			dispatch(getCardsTC({cardsPack_id: packid}))
@@ -97,7 +98,7 @@ export const Cards = React.memo(() => {
 	const onChangePageCount = (pageCount: number) => {
 		if (packid) {
 			dispatch(getCardsTC({
-				cardsPack_id: packid, page, pageCount,cardQuestion: searchQuestion,
+				cardsPack_id: packid, page, pageCount, cardQuestion: searchQuestion,
 				sortCards: `${Number(sortUpdate)}${switchSort}`,
 			}))
 		}
@@ -119,7 +120,7 @@ export const Cards = React.memo(() => {
 	}
 
 	//для корректной работы поиска(сначала используем поиск, потом можно пользоваться сортировкой и ничего не слетает)
-	const searchQestionValue = (value:string) => {
+	const searchQestionValue = (value: string) => {
 		dispatch(setSearchQuestionAC(value))
 	}
 
@@ -138,7 +139,7 @@ export const Cards = React.memo(() => {
 
 					<SearchAppBar onSearchPacks={onSearchQuestionCards}
 					              searchCallback={searchQestionValue}
-								  children={<AddNewCardModal/>}
+					              children={<AddNewCardModal/>}
 					/>
 
 					<Table aria-label="simple table">
@@ -178,7 +179,14 @@ export const Cards = React.memo(() => {
 									key={card._id}
 									sx={{'&:last-child td, &:last-child th': {border: 0}}}
 								>
-									<TableCell component="th" scope="row">{card.question}</TableCell>
+									<TableCell component="th" scope="row">
+
+										{(card.question.slice(0, 11) === 'data:image/')
+											? <img src={card.question} alt={'https://mykaleidoscope.ru/uploads/posts/2021-03/1615355441_44-p-roza-khot-eksplorer-obraz-45.jpg'}/>
+											: <div>{card.question}</div>
+										}
+
+									</TableCell>
 									<TableCell align="right">{card.answer}</TableCell>
 									<TableCell align="right">{
 										`${(card.updated).slice(8, 10)}.${(card.updated).slice(5, 7)}.${(card.updated).slice(0, 4)}`
@@ -186,9 +194,9 @@ export const Cards = React.memo(() => {
 
 									<TableCell align="right">
 										<Rating name="read-only"
-												precision={0.5}
-												value={card.grade}
-												size={"small"} readOnly/>
+										        precision={0.5}
+										        value={card.grade}
+										        size={"small"} readOnly/>
 									</TableCell>
 
 									<TableCell align="right">
@@ -196,12 +204,12 @@ export const Cards = React.memo(() => {
 											? <div className={style.iconBlock}>
 
 												<DeleteCardModal handleOperation={() => deleteCardHandler(card._id)}
-																 cardName={card.question}/>
+												                 cardName={card.question}/>
 
 												<UpdateCardModal packid={packid!}
-																 question={card.question}
-																 answer={card.answer}
-																 cardId={card._id}/>
+												                 question={card.question}
+												                 answer={card.answer}
+												                 cardId={card._id}/>
 											</div>
 											: null
 										}

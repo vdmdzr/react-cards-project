@@ -11,121 +11,135 @@ import HoverRating from "./Rating";
 
 
 const getCard = (cards: CardType[]) => {
-    const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0);
-    const rand = Math.random() * sum;
-    const res = cards.reduce((acc: { sum: number, id: number }, card, i) => {
-            const newSum = acc.sum + (6 - card.grade) * (6 - card.grade);
-            return {sum: newSum, id: newSum < rand ? i : acc.id}
-        }
-        , {sum: 0, id: -1});
-    return cards[res.id + 1];
+	const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0);
+	const rand = Math.random() * sum;
+	const res = cards.reduce((acc: { sum: number, id: number }, card, i) => {
+			const newSum = acc.sum + (6 - card.grade) * (6 - card.grade);
+			return {sum: newSum, id: newSum < rand ? i : acc.id}
+		}
+		, {sum: 0, id: -1});
+	return cards[res.id + 1];
 }
 
 export const LearnPage = () => {
 
-    const {packid, packname} = useParams()
-    const dispatch = useAppDispatch()
-    const status = useAppSelector(state => state.profile.status)
-    const [isChecked, setIsChecked] = useState<boolean>(false);
-    const [first, setFirst] = useState<boolean>(true);
-    const [rating, setRating] = useState<number>(0)
-    const [error, setError] = useState<boolean>(false)
-    const cards = useAppSelector(state => state.cards.cards)
+	const {packid, packname} = useParams()
+	const dispatch = useAppDispatch()
+	const status = useAppSelector(state => state.profile.status)
+	const [isChecked, setIsChecked] = useState<boolean>(false);
+	const [first, setFirst] = useState<boolean>(true);
+	const [rating, setRating] = useState<number>(0)
+	const [error, setError] = useState<boolean>(false)
+	const cards = useAppSelector(state => state.cards.cards)
 
-    const [card, setCard] = useState<CardType>({
-        answer: '',
-        cardsPack_id: '',
-        created: '',
-        grade: 0,
-        question: '',
-        shots: 0,
-        updated: '',
-        user_id: '',
-        _id: '',
-    });
+	const [card, setCard] = useState<CardType>({
+		answer: '',
+		cardsPack_id: '',
+		created: '',
+		grade: 0,
+		question: '',
+		shots: 0,
+		updated: '',
+		user_id: '',
+		_id: '',
+	});
 
-    useEffect(() => {
-        if (first) {
-            packid && dispatch(getCardsTC({cardsPack_id: packid, page: 1, pageCount: 1000}));
-            setFirst(false);
-        }
-        if (cards.length > 0) setCard(getCard(cards));
-    }, [dispatch, packid, cards, first]);
+	useEffect(() => {
+		if (first) {
+			packid && dispatch(getCardsTC({cardsPack_id: packid, page: 1, pageCount: 1000}));
+			setFirst(false);
+		}
+		if (cards.length > 0) setCard(getCard(cards));
+	}, [dispatch, packid, cards, first]);
 
-    const onSelectRating = (value: number) => {
-        setRating(value)
-        setError(false)
-    }
+	const onSelectRating = (value: number) => {
+		setRating(value)
+		setError(false)
+	}
 
-    const onNext = () => {
-        if (rating < 1 || rating > 5) {
-            setError(true)
-        } else {
-            setIsChecked(false)
-            setRating(0)
-            setError(false)
-            dispatch(setCardGrade(rating, card._id))
-            setCard(getCard(cards));
-        }
-    }
+	const onNext = () => {
+		if (rating < 1 || rating > 5) {
+			setError(true)
+		} else {
+			setIsChecked(false)
+			setRating(0)
+			setError(false)
+			dispatch(setCardGrade(rating, card._id))
+			setCard(getCard(cards));
+		}
+	}
 
-    return (
-        <div className={style.mainContainer}>
-            {status === 'loading' && <LinearProgress/>}
+	return (
+		<div className={style.mainContainer}>
+			{status === 'loading' && <LinearProgress/>}
 
-            <Grid container>
-                <div className={style.grid}>
-                    <Grid item>
-                        <div className={style.container}>
-                            <div className={styles.learnTitle}>Learn: {packname}</div>
-                            <div>
-                                <div>
-                                    <div className={styles.text}><b>Question:</b> {card.question}</div>
-                                    {!isChecked && (
-                                        <div className={styles.buttonBlock}>
-                                            <NavLink to={'/packs-page'}>
-                                                <Button variant={'contained'}
-                                                        color={'primary'}>
-                                                    Cancel
-                                                </Button>
-                                            </NavLink>
-                                            <Button onClick={() => setIsChecked(true)} variant={'contained'}
-                                                    color={'primary'}>
-                                                Show answer
-                                            </Button>
-                                        </div>
-                                    )}
-                                    {isChecked && (
-                                        <>
-                                            <div><b>Answer:</b> {card.answer}</div>
+			<Grid container>
+				<div className={style.grid}>
+					<Grid item>
+						<div className={style.container}>
+							<div className={styles.learnTitle}>Learn: {packname}</div>
+							<div>
+								<div>
+									<div className={styles.text}><b>Question:</b>
 
-                                            <h3>Rate yourself:</h3>
+										{(card.question.slice(0,11)==='data:image/') ?
+											<div><img alt={'photoQuestion'} className={styles.imgQuestion} src={card.question}/></div>
+											: <div>{card.question}</div>
+										}
 
-                                            <HoverRating onSelectRating={onSelectRating}/>
+									</div>
+									{!isChecked && (
+										<div className={styles.buttonBlock}>
+											<NavLink to={'/packs-page'}>
+												<Button variant={'contained'}
+												        color={'primary'}>
+													Cancel
+												</Button>
+											</NavLink>
+											<Button onClick={() => setIsChecked(true)} variant={'contained'}
+											        color={'primary'}>
+												Show answer
+											</Button>
+										</div>
+									)}
+									{isChecked && (
+										<>
+											<div><b>Answer:</b>
 
-                                            <div className={styles.buttonBlock}>
-                                                <NavLink to={'/packs-page'}>
-                                                    <Button variant={'contained'}
-                                                            color={'primary'}>
-                                                        Cancel
-                                                    </Button>
-                                                </NavLink>
-                                                <Button onClick={onNext} variant={'contained'}
-                                                        color={'primary'}>
-                                                    next
-                                                </Button>
-                                            </div>
-                                        </>
-                                    )}
+												{card.answer}
 
-                                    {error && <div className={styles.error}>Rate yourself before next question!</div>}
-                                </div>
-                            </div>
-                        </div>
-                    </Grid>
-                </div>
-            </Grid>
-        </div>
-    )
+											</div>
+											<div className={styles.rate}>
+												<h3>Rate yourself:</h3>
+
+												<HoverRating onSelectRating={onSelectRating}/>
+											</div>
+
+
+
+											<div className={styles.buttonBlock}>
+												<NavLink to={'/packs-page'}>
+													<Button variant={'contained'}
+													        color={'primary'}>
+														Cancel
+													</Button>
+												</NavLink>
+												<Button onClick={onNext} variant={'contained'}
+												        color={'primary'}>
+													next
+												</Button>
+											</div>
+										</>
+									)}
+
+									{error && <div className={styles.error}>Rate yourself before next question!</div>}
+								</div>
+							</div>
+						</div>
+					</Grid>
+				</div>
+			</Grid>
+		</div>
+	)
 }
 

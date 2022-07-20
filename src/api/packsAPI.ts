@@ -37,6 +37,7 @@ export type CreatePackRequestData = {
 export type UpdatePackRequestData = {
     _id: string
     name?: string
+    deckCover?: string
 }
 
 export type FetchDataType = {

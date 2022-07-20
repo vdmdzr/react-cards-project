@@ -4,12 +4,15 @@ import {Button, Checkbox, FormControlLabel, TextField} from "@mui/material";
 import {createPackTC} from "../../../../reducers/packsReducer";
 import {useAppDispatch} from "../../../../store/store";
 import styles from '../../../common/pages/modal/Modal.module.css'
+import {InputTypeFile} from "../../../common/pages/UploadFile/InputTypeFile";
+import {UploadPhotoType} from "../../profile/ProfilePage";
 
 
 export const AddNewPackModal = () => {
 
     const [name, setName] = useState('')
     const [privatePack, setPrivatePack] = useState(false)
+    const [deckCover, setDeckCover] = useState('')
 
     const dispatch = useAppDispatch()
 
@@ -22,15 +25,22 @@ export const AddNewPackModal = () => {
     };
 
     const createPackHandler = () => {
-        dispatch(createPackTC({name, private: privatePack}))
+        dispatch(createPackTC({name, private: privatePack, deckCover}))
         setName('')
         setPrivatePack(false)
+        setDeckCover('')
     }
+
+    const updatePhotoHandler = (data: UploadPhotoType) => {
+        setDeckCover(data.deckCover)
+    }
+
 
     return (
         <BasicModal operationButtonName={"ADD NEW PACK"}
                     operationName={"Add New Pack"}
                     handleOperation={createPackHandler}
+                    disabled={!name}
                     openModalButton={
                         <Button variant="contained" color="primary">
                             Add New Pack
@@ -43,6 +53,7 @@ export const AddNewPackModal = () => {
                     className={styles.input}
                     label="Pack Name"
                     variant="standard"
+                    required={true}
                     value={name}
                     onChange={onchangeHandler}
                 />
@@ -59,6 +70,19 @@ export const AddNewPackModal = () => {
                         }
                     />
                 </div>
+                <div className={styles.imgPreviewContainer}>
+                    <div className={styles.imgPreview}>
+                        <div className={styles.coverPreviewFieldText}>Pack Cover Preview</div>
+                    </div>
+                    <div className={styles.previewContainer}><img className={styles.preview} src={deckCover}/></div>
+
+                </div>
+                <InputTypeFile updatePhotoHandler={updatePhotoHandler} keyPhotoField={'deckCover'}>
+                    <Button className={styles.coverButton} variant="contained" color="primary" component={'span'}>
+                        Add Cover
+                    </Button>
+                </InputTypeFile>
+
             </div>
         </BasicModal>
     );

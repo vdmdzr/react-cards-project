@@ -23,9 +23,49 @@
 }
 
 .input {
-    width: 90%;
+    width: 100%;
 }
 
 .checkbox {
     margin-top: 10px;
+}
+
+.coverButton {
+    width: 100%;
+}
+
+.imgPreviewContainer {
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid lightgray;
+}
+
+.imgPreview {
+    height: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-top: 10px
+}
+
+.coverPreviewFieldText {
+    width: 100%;
+    color: lightgray;
+    font-size: 14px;
+    margin-left: 14px;
+}
+
+.previewContainer {
+    height: 80%;
+}
+
+.preview {
+    height: 100%;
 }

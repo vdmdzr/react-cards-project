@@ -22,11 +22,13 @@ import {useNavigate} from "react-router-dom";
 import {DeletePackModal} from "./modals/DeletePackModal";
 import {AddNewPackModal} from "./modals/AddNewPackModal";
 import {UpdatePackModal} from "./modals/UpdatePackModal";
+import style from "../profile/Profile.module.css";
 
 export const Packs = () => {
 
     const [isActive, setIsActive] = useState(true)
     const [sortDirection, setSortDirection] = useState(false)
+    const [isAvaBroken, setIsAvaBroken] = useState(false)
 
     const navigate = useNavigate()
 
@@ -146,7 +148,8 @@ export const Packs = () => {
 
     const onSortPacks = () => {
         if (userId) {
-            dispatch(getPacksTC({user_id: userId, sortPacks, page, pageCount, packName: searchPackName,
+            dispatch(getPacksTC({
+                user_id: userId, sortPacks, page, pageCount, packName: searchPackName,
             }))
         } else {
             dispatch(getPacksTC({sortPacks, page, pageCount, packName: searchPackName}))
@@ -252,8 +255,12 @@ export const Packs = () => {
                         <Table className={styles.mainCardsTable} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
+
+                                    <TableCell onClick={onSortPacks} className={styles.headerText}
+                                               align={'center'}><b>Cover</b></TableCell>
                                     <TableCell onClick={onSortPacks} className={styles.headerText}
                                                align={'center'}><b>Name</b></TableCell>
+
                                     <TableCell onClick={onSortPacks} className={styles.headerText} align={'center'}><b>Cards
                                         count</b></TableCell>
 
@@ -277,6 +284,16 @@ export const Packs = () => {
                                     <TableRow
                                         key={p._id}
                                         sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+                                        <TableCell onClick={() => goToCardHandler(p._id, p.name)}
+                                                   className={styles.tableTextLink} component="th" scope="row">
+                                            {p.deckCover
+                                                ? <img alt={'avatar'}
+                                                       className={styles.photo}
+                                                       src={p.deckCover}
+                                                />
+                                                : null
+                                            }
+                                        </TableCell>
                                         <TableCell onClick={() => goToCardHandler(p._id, p.name)}
                                                    className={styles.tableTextLink} component="th" scope="row">
                                             {p.name}
@@ -311,6 +328,7 @@ export const Packs = () => {
                                                         min={min}
                                                         max={max}
                                                         name={p.name}
+                                                        deckCover = {p.deckCover}
                                                     />
 
                                                 </div>

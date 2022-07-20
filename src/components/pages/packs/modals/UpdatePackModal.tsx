@@ -1,10 +1,12 @@
 import React, {ChangeEvent, useState} from 'react';
 import {BasicModal} from "../../../common/pages/modal/BasicModal";
-import {IconButton, TextField} from "@mui/material";
+import {Button, IconButton, TextField} from "@mui/material";
 import {updatePackTC} from "../../../../reducers/packsReducer";
 import {useAppDispatch} from "../../../../store/store";
 import styles from '../../../common/pages/modal/Modal.module.css'
 import EditIcon from "@mui/icons-material/Edit";
+import {InputTypeFile} from "../../../common/pages/UploadFile/InputTypeFile";
+import {UploadPhotoType} from "../../profile/ProfilePage";
 
 type UpdatePackPropsType = {
     _id: string
@@ -15,12 +17,13 @@ type UpdatePackPropsType = {
     min: number
     max: number
     name: string
+    deckCover: string | null
 }
 
 export const UpdatePackModal = (props: UpdatePackPropsType) => {
 
     const [newName, setNewName] = useState(props.name)
-
+    const [deckCover, setDeckCover] = useState(props.deckCover)
     const dispatch = useAppDispatch()
 
     const onchangeNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -28,18 +31,39 @@ export const UpdatePackModal = (props: UpdatePackPropsType) => {
     }
 
     const UpdatePackHandler = () => {
-        dispatch(updatePackTC({_id: props._id, name: newName},
-            {
-                user_id: props.userId,
-                page: props.page,
-                pageCount: props.pageCount,
-                sortPacks: props.sortPacks,
-                min: props.min,
-                max: props.max,
-                name: newName
-            }
-        ))
+        if (deckCover) {
+            dispatch(updatePackTC({_id: props._id, name: newName, deckCover},
+                {
+                    user_id: props.userId,
+                    page: props.page,
+                    pageCount: props.pageCount,
+                    sortPacks: props.sortPacks,
+                    min: props.min,
+                    max: props.max,
+                    name: newName,
+                }
+            ))
+        }
+
+        if (!deckCover) {
+            dispatch(updatePackTC({_id: props._id, name: newName},
+                {
+                    user_id: props.userId,
+                    page: props.page,
+                    pageCount: props.pageCount,
+                    sortPacks: props.sortPacks,
+                    min: props.min,
+                    max: props.max,
+                    name: newName,
+                }
+            ))
+        }
     }
+
+    const updatePhotoHandler = (data: UploadPhotoType) => {
+        setDeckCover(data.deckCover)
+    }
+
 
     return (
 
@@ -65,6 +89,23 @@ export const UpdatePackModal = (props: UpdatePackPropsType) => {
                     />
 
                 </div>
+
+                <div className={styles.imgPreviewContainer}>
+                    <div className={styles.imgPreview}>
+                        <div className={styles.coverPreviewFieldText}>Pack Cover Preview</div>
+                    </div>
+                    {deckCover
+                        ?
+                        <div className={styles.previewContainer}><img className={styles.preview} src={deckCover}/></div>
+                        : null
+                    }
+
+                </div>
+                <InputTypeFile updatePhotoHandler={updatePhotoHandler} keyPhotoField={'deckCover'}>
+                    <Button className={styles.coverButton} variant="contained" color="primary" component={'span'}>
+                        Edit Cover
+                    </Button>
+                </InputTypeFile>
             </BasicModal>
 
         </>

@@ -22,7 +22,8 @@ type PropsType = {
     openModalButton: React.ReactNode
     operationName: string
     operationButtonName: string
-    handleOperation: ()=>void
+    handleOperation: () => void
+    disabled?: boolean
 }
 
 
@@ -31,7 +32,8 @@ export const BasicModal: FC<PropsType> = ({
                                               openModalButton,
                                               operationName,
                                               operationButtonName,
-                                              handleOperation
+                                              handleOperation,
+                                              disabled
                                           }) => {
 
     const [open, setOpen] = React.useState(false);
@@ -39,7 +41,7 @@ export const BasicModal: FC<PropsType> = ({
     const handleClose = () => setOpen(false);
 
 
-    const onClickHandler=()=>{
+    const onClickHandler = () => {
         handleOperation()
         handleClose()
     }
@@ -60,14 +62,14 @@ export const BasicModal: FC<PropsType> = ({
                     </div>
 
 
-                   <div className={styles.children}>{children}</div>
+                    <div className={styles.children}>{children}</div>
 
                     <div className={styles.buttonBlock}>
                         <Button variant={'contained'} color="primary"
                                 onClick={handleClose}>
                             Cancel
                         </Button>
-                        <Button variant={'contained'} color="primary"
+                        <Button disabled={disabled} variant={'contained'} color="primary"
                                 onClick={onClickHandler}>
                             {operationButtonName}
                         </Button>

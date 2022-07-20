@@ -45,5 +45,11 @@
     margin-bottom: 20px;
 }
 
+.imgQuestion {
+    height: 50%;
+}
 
-
+.rate {
+    height: 120px;
+    width: 100%;
+}

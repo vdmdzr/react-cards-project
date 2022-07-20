@@ -111,3 +111,7 @@
 .paginator {
     margin-right: 10vw
 }
+
+.photo{
+    width: calc(30px + 4vmin);
+}

@@ -88,3 +88,16 @@
     margin-bottom: 20px;
 }
 
+.imgModal{
+    position: absolute;
+    bottom: 178px;
+    left: 320px;
+    display: inline-block;
+    width: 62px;
+}
+
+.deleteImg{
+    max-width: 150px;
+    display: block;
+    margin-top: 20px;
+}

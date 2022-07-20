@@ -29,6 +29,8 @@ export const profileReducer = (state: InitialStateType = initialState, action:
             return {...state, userId: action.userId}
         case 'APP-UPDATE-USER-AVATAR':
             return {...state, profile: {...state.profile, avatar: action.avatar}}
+
+
         default:
             return state
     }
