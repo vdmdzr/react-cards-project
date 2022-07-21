@@ -40,7 +40,6 @@ export const Cards = React.memo(() => {
 	const searchQuestion = useAppSelector(state => state.cards.searchQuestion)
 	const switchSort = useAppSelector(state => state.cards.switchSort)
 
-
 	useEffect(() => {
 		if (packid) {
 			dispatch(getCardsTC({cardsPack_id: packid}))

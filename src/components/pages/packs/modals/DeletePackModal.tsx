@@ -2,6 +2,7 @@ import React, {FC} from 'react';
 import {BasicModal} from "../../../common/pages/modal/BasicModal";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from '@mui/icons-material/Delete';
+import {useAppSelector} from "../../../../store/store";
 
 
 type DeletePackModalType = {
@@ -11,11 +12,15 @@ type DeletePackModalType = {
 }
 
 export const DeletePackModal: FC<DeletePackModalType> = ({handleOperation, packName}) => {
+
+    const status = useAppSelector(state => state.profile.status)
+
     return (
         <BasicModal operationButtonName={"Delete"}
                     operationName={"Delete Pack"}
                     handleOperation={handleOperation}
                     openModalButton={<IconButton
+                        disabled={status==='loading'}
                         aria-label="delete" size="small">
                         <DeleteIcon fontSize="inherit"/>
                     </IconButton>}>

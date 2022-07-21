@@ -17,6 +17,8 @@ type SliderPropsType = {
 export const RangeSlider = (props: SliderPropsType) => {
 
     const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount)
+    const status = useAppSelector(state => state.profile.status)
+
     const dispatch = useAppDispatch()
     const [value, setValue] = React.useState<number[]>([0, maxCardsCount]);
 
@@ -55,6 +57,7 @@ export const RangeSlider = (props: SliderPropsType) => {
                 getAriaValueText={valuetext}
                 style={{'width': '90%'}}
                 marks
+                disabled={status==='loading'}
                 max={maxCardsCount}
                 disableSwap
             />

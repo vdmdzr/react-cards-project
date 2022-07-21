@@ -37,6 +37,8 @@
 .arrowBackIcon {
     cursor: pointer;
     padding-right: 10px;
+    transition: transform .5s;
+    color: grey;
 }
 
 .back {
@@ -44,19 +46,25 @@
     padding-left: 60px;
     align-items: center;
 }
-.iconBlock{
+
+.iconBlock {
     width: 100%;
     display: flex;
     justify-content: flex-end;
     cursor: pointer;
 }
 
-.packName{
+.arrowBackIcon:hover {
+    transform: scale(1.5);
+    color: black;
+}
+
+.packName {
     font-weight: 500;
     font-size: 25px;
 }
 
-img{
+img {
     width: 200px;
 }
 

@@ -22,13 +22,11 @@ import {useNavigate} from "react-router-dom";
 import {DeletePackModal} from "./modals/DeletePackModal";
 import {AddNewPackModal} from "./modals/AddNewPackModal";
 import {UpdatePackModal} from "./modals/UpdatePackModal";
-import style from "../profile/Profile.module.css";
 
 export const Packs = () => {
 
     const [isActive, setIsActive] = useState(true)
     const [sortDirection, setSortDirection] = useState(false)
-    const [isAvaBroken, setIsAvaBroken] = useState(false)
 
     const navigate = useNavigate()
 
@@ -43,6 +41,7 @@ export const Packs = () => {
     const min = useAppSelector(state => state.packs.min)
     const max = useAppSelector(state => state.packs.max)
     const searchPackName = useAppSelector(state => state.packs.searchPackName)
+    const status = useAppSelector(state => state.profile.status)
 
     const sortPacks = `${Number(sortDirection)}updated`
 
@@ -224,13 +223,13 @@ export const Packs = () => {
                         <p className={styles.title}>Show packs cards</p>
                         <div className={styles.buttonBlock}>
                             <Button className={styles.button} variant={'contained'}
-                                    disabled={!isActive}
+                                    disabled={!isActive || status==='loading'}
                                     color="primary"
                                     onClick={myPacksHandler}>
                                 My
                             </Button>
                             <Button variant={'contained'} color="primary"
-                                    disabled={isActive}
+                                    disabled={isActive || status==='loading'}
                                     onClick={allPacksHandler}>
                                 All
                             </Button>
@@ -282,6 +281,7 @@ export const Packs = () => {
                             <TableBody>
                                 {packs.map((p) => (
                                     <TableRow
+                                        className={styles.tableRow}
                                         key={p._id}
                                         sx={{'&:last-child td, &:last-child th': {border: 0}}}>
                                         <TableCell onClick={() => goToCardHandler(p._id, p.name)}
@@ -309,7 +309,7 @@ export const Packs = () => {
                                             <TableCell className={styles.tableText} align={'center'}>
                                                 <div className={styles.iconBlock}>
 
-                                                    <IconButton disabled={p.cardsCount === 0}
+                                                    <IconButton disabled={p.cardsCount === 0 || status==='loading'}
                                                                 onClick={() => goToLearnHandler(p._id, p.name)}
                                                                 aria-label="school" size="small">
 
@@ -335,7 +335,7 @@ export const Packs = () => {
                                             </TableCell>
                                             : <TableCell className={styles.tableText} align={'left'}>
                                                 <div className={styles.iconBlock1}>
-                                                    <IconButton disabled={p.cardsCount === 0}
+                                                    <IconButton disabled={p.cardsCount === 0 || status==='loading'}
                                                                 onClick={() => goToLearnHandler(p._id, p.name)}
                                                                 aria-label="school" size="small">
                                                         <SchoolIcon fontSize="inherit"/>

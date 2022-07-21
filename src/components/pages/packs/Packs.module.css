@@ -115,3 +115,7 @@
 .photo{
     width: calc(30px + 4vmin);
 }
+
+.tableRow:hover {
+    background-color: #e5e9f1;
+}

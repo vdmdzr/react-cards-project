@@ -2,11 +2,12 @@ import React, {ChangeEvent, useState} from 'react';
 import {BasicModal} from "../../../common/pages/modal/BasicModal";
 import {Button, IconButton, TextField} from "@mui/material";
 import {updatePackTC} from "../../../../reducers/packsReducer";
-import {useAppDispatch} from "../../../../store/store";
+import {useAppDispatch, useAppSelector} from "../../../../store/store";
 import styles from '../../../common/pages/modal/Modal.module.css'
 import EditIcon from "@mui/icons-material/Edit";
 import {InputTypeFile} from "../../../common/pages/UploadFile/InputTypeFile";
 import {UploadPhotoType} from "../../profile/ProfilePage";
+import style from "../../forgotPass/ForgotPasswordPage.module.css";
 
 type UpdatePackPropsType = {
     _id: string
@@ -24,6 +25,7 @@ export const UpdatePackModal = (props: UpdatePackPropsType) => {
 
     const [newName, setNewName] = useState(props.name)
     const [deckCover, setDeckCover] = useState(props.deckCover)
+    const status = useAppSelector(state => state.profile.status)
     const dispatch = useAppDispatch()
 
     const onchangeNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -73,17 +75,18 @@ export const UpdatePackModal = (props: UpdatePackPropsType) => {
                         handleOperation={UpdatePackHandler}
                         openModalButton={
                             <IconButton
+                                disabled={status==='loading'}
                                 aria-label="delete" size="small">
                                 <EditIcon fontSize="inherit"/>
                             </IconButton>
                         }>
                 <div>
+
                     <TextField
                         type="text"
                         id="standard-basic"
                         className={styles.input}
                         label="Pack Name"
-                        variant="standard"
                         value={newName}
                         onChange={onchangeNameHandler}
                     />

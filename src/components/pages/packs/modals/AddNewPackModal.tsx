@@ -2,7 +2,7 @@ import React, {ChangeEvent, useState} from 'react';
 import {BasicModal} from "../../../common/pages/modal/BasicModal";
 import {Button, Checkbox, FormControlLabel, TextField} from "@mui/material";
 import {createPackTC} from "../../../../reducers/packsReducer";
-import {useAppDispatch} from "../../../../store/store";
+import {useAppDispatch, useAppSelector} from "../../../../store/store";
 import styles from '../../../common/pages/modal/Modal.module.css'
 import {InputTypeFile} from "../../../common/pages/UploadFile/InputTypeFile";
 import {UploadPhotoType} from "../../profile/ProfilePage";
@@ -15,6 +15,9 @@ export const AddNewPackModal = () => {
     const [deckCover, setDeckCover] = useState('')
 
     const dispatch = useAppDispatch()
+
+    const status = useAppSelector(state => state.profile.status)
+
 
     const onchangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setName(e.currentTarget.value)
@@ -42,7 +45,7 @@ export const AddNewPackModal = () => {
                     handleOperation={createPackHandler}
                     disabled={!name}
                     openModalButton={
-                        <Button variant="contained" color="primary">
+                        <Button disabled={status==='loading'} variant="contained" color="primary">
                             Add New Pack
                         </Button>
                     }>
@@ -52,7 +55,6 @@ export const AddNewPackModal = () => {
                     id="standard-basic"
                     className={styles.input}
                     label="Pack Name"
-                    variant="standard"
                     required={true}
                     value={name}
                     onChange={onchangeHandler}
@@ -74,7 +76,11 @@ export const AddNewPackModal = () => {
                     <div className={styles.imgPreview}>
                         <div className={styles.coverPreviewFieldText}>Pack Cover Preview</div>
                     </div>
-                    <div className={styles.previewContainer}><img className={styles.preview} src={deckCover}/></div>
+                    {(deckCover !== '')
+                        ?
+                        <div className={styles.previewContainer}><img className={styles.preview} src={deckCover}/></div>
+                        : <div className={styles.previewContainer}></div>
+                    }
 
                 </div>
                 <InputTypeFile updatePhotoHandler={updatePhotoHandler} keyPhotoField={'deckCover'}>

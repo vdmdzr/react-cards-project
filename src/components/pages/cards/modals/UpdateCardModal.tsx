@@ -1,7 +1,7 @@
 import React, {ChangeEvent, FC, useState} from 'react';
 import styles from '../../../common/pages/modal/Modal.module.css';
 import {updateCardTC} from '../../../../reducers/cardsReduser';
-import {useAppDispatch} from '../../../../store/store';
+import {useAppDispatch, useAppSelector} from '../../../../store/store';
 import {BasicModal} from '../../../common/pages/modal/BasicModal';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from "@mui/icons-material/Edit";
@@ -31,6 +31,7 @@ export const UpdateCardModal: FC<UpdateCardModalType> = ({packid, question, answ
 	const [newQuestion, setNewQuestion] = useState(question)
 	const [newAnswer, setNewAnswer] = useState(answer)
 	const [photoQuestion, setPhotoQuestion] = useState('')
+	const status = useAppSelector(state => state.profile.status)
 
 	const dispatch = useAppDispatch()
 
@@ -70,6 +71,7 @@ export const UpdateCardModal: FC<UpdateCardModalType> = ({packid, question, answ
 		            handleOperation={handlerUpdateCard}
 		            openModalButton={
 			            <IconButton
+							disabled={status==='loading'}
 				            aria-label="edit" size="small">
 				            <EditIcon fontSize="inherit"/>
 			            </IconButton>
@@ -120,13 +122,12 @@ export const UpdateCardModal: FC<UpdateCardModalType> = ({packid, question, answ
 					id="standard-basic"
 					className={styles.input}
 					label="Answer Name"
-					variant="standard"
 					value={newAnswer}
 					onChange={onChangeAnswerHandler}
 				/>
 
 			</div>
 		</BasicModal>
-	);
-};
+	)
+}
 

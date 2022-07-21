@@ -20,6 +20,7 @@ export const SearchAppBar = (props: SearchType) => {
 	const [firstRender, setFirstRender]=useState(true)
 	const debouncedValue = useDebounce<string>(value, 1000)
 
+
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setValue(event.currentTarget.value)
 	}
