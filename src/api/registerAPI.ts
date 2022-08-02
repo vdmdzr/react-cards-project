@@ -2,16 +2,16 @@ import {instance} from "./Instance";
 
 
 export type RegisterRequestDataType = {
-    email: string,
-    password: string
+	email: string,
+	password: string
 }
 
 export type RegisterResponseType = {
-    error?: string
+	error?: string
 }
 
 export const RegisterAPI = {
-    register(data:RegisterRequestDataType) {
-        return instance.post<RegisterResponseType>('/auth/register', data)
-    }
+	register(data: RegisterRequestDataType) {
+		return instance.post<RegisterResponseType>('/auth/register', data)
+	}
 }

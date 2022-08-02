@@ -5,63 +5,63 @@ import {useAppDispatch, useAppSelector} from "../../../../store/store";
 import {saveMaxAC, saveMinAC} from "../../../../reducers/packsReducer";
 
 function valuetext(value: number) {
-    return `${value}`;
+	return `${value}`;
 }
 
 const minDistance = 1;
 
 type SliderPropsType = {
-    sliderHandler: (min: number, max: number) => void
+	sliderHandler: (min: number, max: number) => void
 }
 
 export const RangeSlider = (props: SliderPropsType) => {
 
-    const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount)
-    const status = useAppSelector(state => state.profile.status)
+	const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount)
+	const status = useAppSelector(state => state.profile.status)
 
-    const dispatch = useAppDispatch()
-    const [value, setValue] = React.useState<number[]>([0, maxCardsCount]);
+	const dispatch = useAppDispatch()
+	const [value, setValue] = React.useState<number[]>([0, maxCardsCount]);
 
-    const handleChange = (
-        event: Event,
-        newValue: number | number[],
-        activeThumb: number,
-    ) => {
+	const handleChange = (
+		event: Event,
+		newValue: number | number[],
+		activeThumb: number,
+	) => {
 
-        if (!Array.isArray(newValue)) {
-            return;
-        }
-        if (activeThumb === 0) {
-            setValue([Math.min(newValue[0], value[1] - minDistance), value[1]]);
-        } else {
-            setValue([value[0], Math.max(newValue[1], value[0] + minDistance)]);
-        }
-    };
+		if (!Array.isArray(newValue)) {
+			return;
+		}
+		if (activeThumb === 0) {
+			setValue([Math.min(newValue[0], value[1] - minDistance), value[1]]);
+		} else {
+			setValue([value[0], Math.max(newValue[1], value[0] + minDistance)]);
+		}
+	};
 
-    const setValueHandler=()=>{
-        dispatch(saveMinAC(value[0]))
-        dispatch(saveMaxAC(value[1]))
-        props.sliderHandler(value[0], value[1])
-    }
+	const setValueHandler = () => {
+		dispatch(saveMinAC(value[0]))
+		dispatch(saveMaxAC(value[1]))
+		props.sliderHandler(value[0], value[1])
+	}
 
-    return (
+	return (
 
-        <Box sx={{width: 200}}>
-            <Slider
-                getAriaLabel={() => 'Minimum distance'}
-                color={'primary'}
-                value={value}
-                onChange={handleChange}
-                onChangeCommitted={setValueHandler}
-                valueLabelDisplay="on"
-                getAriaValueText={valuetext}
-                style={{'width': '90%'}}
-                marks
-                disabled={status==='loading'}
-                max={maxCardsCount}
-                disableSwap
-            />
-        </Box>
-    );
+		<Box sx={{width: 200}}>
+			<Slider
+				getAriaLabel={() => 'Minimum distance'}
+				color={'primary'}
+				value={value}
+				onChange={handleChange}
+				onChangeCommitted={setValueHandler}
+				valueLabelDisplay="on"
+				getAriaValueText={valuetext}
+				style={{'width': '90%'}}
+				marks
+				disabled={status === 'loading'}
+				max={maxCardsCount}
+				disableSwap
+			/>
+		</Box>
+	);
 }
 

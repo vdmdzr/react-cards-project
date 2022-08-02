@@ -11,18 +11,18 @@ import {cardsReducer} from "../reducers/cardsReduser";
 
 
 const rootReducer = combineReducers({
-    login: loginReducer,
-    register: registerReducer,
-    forgot: forgotReducer,
-    newPassword: newPasswordReducer,
-    profile: profileReducer,
-    packs: packsReducer,
+	login: loginReducer,
+	register: registerReducer,
+	forgot: forgotReducer,
+	newPassword: newPasswordReducer,
+	profile: profileReducer,
+	packs: packsReducer,
 	cards: cardsReducer,
 })
 
 export const store = legacy_createStore(rootReducer, applyMiddleware(thunk))
 export type AppRootStateType = ReturnType<typeof store.getState>
-export const useAppDispatch=()=>useDispatch<AppDispatch>()
+export const useAppDispatch = () => useDispatch<AppDispatch>()
 export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AnyAction>

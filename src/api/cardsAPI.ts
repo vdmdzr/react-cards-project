@@ -15,13 +15,13 @@ export type CardType = {
 
 export type CardsGetType = {
 	cardsPack_id: string
-	cardAnswer?: string // не обязательно
-	cardQuestion?: string // не обязательно
-	min?: number// не обязательно
-	max?: number // не обязательно
-	sortCards?: string // не обязательно
-	page?: number// не обязательно
-	pageCount?: number// не обязательно
+	cardAnswer?: string
+	cardQuestion?: string
+	min?: number
+	max?: number
+	sortCards?: string
+	page?: number
+	pageCount?: number
 }
 
 export type CardResponseType = {
@@ -59,11 +59,11 @@ export const cardsAPI = {
 		return instance
 			.get<CardResponseType>('/cards/card', {params: {pageCount: 10, ...data}})
 	},
-		createCard(data: PostRequestType) {
-			return instance.post('/cards/card', {
-				card: {...data, question: data.question, answer: data.answer}
-			})
-		},
+	createCard(data: PostRequestType) {
+		return instance.post('/cards/card', {
+			card: {...data, question: data.question, answer: data.answer}
+		})
+	},
 	deleteCard: (cardId: string) => {
 		return instance.delete(`/cards/card?id=${cardId}`)
 	},

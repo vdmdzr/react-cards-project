@@ -5,7 +5,7 @@ type PassResponseType = {
 	error: string
 }
 
-//то что мы отправляем на сервак
+/*то что мы отправляем на сервак*/
 export type EmailRequestType = {
 	email: string
 	message: string
