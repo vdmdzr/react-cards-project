@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/vdmdzr/react-cards-project.git/static/css/main.4d17acea.css",
-    "main.js": "/vdmdzr/react-cards-project.git/static/js/main.3b344545.js",
-    "static/js/787.d2ce132a.chunk.js": "/vdmdzr/react-cards-project.git/static/js/787.d2ce132a.chunk.js",
-    "static/media/email.png": "/vdmdzr/react-cards-project.git/static/media/email.afa651a90799a9252ad0.png",
-    "static/media/avatar.jpg": "/vdmdzr/react-cards-project.git/static/media/avatar.7de80f00a116f49d4d46.jpg",
-    "index.html": "/vdmdzr/react-cards-project.git/index.html",
-    "main.4d17acea.css.map": "/vdmdzr/react-cards-project.git/static/css/main.4d17acea.css.map",
-    "main.3b344545.js.map": "/vdmdzr/react-cards-project.git/static/js/main.3b344545.js.map",
-    "787.d2ce132a.chunk.js.map": "/vdmdzr/react-cards-project.git/static/js/787.d2ce132a.chunk.js.map"
+    "main.css": "/react-cards-project.git/static/css/main.4d17acea.css",
+    "main.js": "/react-cards-project.git/static/js/main.ad5976c1.js",
+    "static/js/787.d2ce132a.chunk.js": "/react-cards-project.git/static/js/787.d2ce132a.chunk.js",
+    "static/media/email.png": "/react-cards-project.git/static/media/email.afa651a90799a9252ad0.png",
+    "static/media/avatar.jpg": "/react-cards-project.git/static/media/avatar.7de80f00a116f49d4d46.jpg",
+    "index.html": "/react-cards-project.git/index.html",
+    "main.4d17acea.css.map": "/react-cards-project.git/static/css/main.4d17acea.css.map",
+    "main.ad5976c1.js.map": "/react-cards-project.git/static/js/main.ad5976c1.js.map",
+    "787.d2ce132a.chunk.js.map": "/react-cards-project.git/static/js/787.d2ce132a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4d17acea.css",
-    "static/js/main.3b344545.js"
+    "static/js/main.ad5976c1.js"
   ]
 }
